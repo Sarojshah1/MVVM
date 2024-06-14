@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.mvvm.Model.Note
 import com.example.mvvm.R
 
+
+
 class NotesAdapter : ListAdapter<Note, NotesAdapter.NoteViewHolder>(NoteDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
