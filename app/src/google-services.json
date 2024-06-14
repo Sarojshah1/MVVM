@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1076076168901",
+    "project_id": "notespro-a81e8",
+    "storage_bucket": "notespro-a81e8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1076076168901:android:dbfe198787c65c085252ac",
+        "android_client_info": {
+          "package_name": "com.example.mvvm"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBBnvUDBfcOr-D8djT3MOZkYU01Ig4Asf0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
