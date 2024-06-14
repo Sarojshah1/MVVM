@@ -2,6 +2,7 @@ package com.example.mvvm.ui.activity
 
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -34,7 +35,7 @@ class NotesActivity : AppCompatActivity() {
                 notesAdapter.submitList(notes)
             }
             result.onFailure { exception ->
-                // Handle the error here
+            Toast.makeText(applicationContext, exception.message, Toast.LENGTH_SHORT).show()
             }
         })
 
