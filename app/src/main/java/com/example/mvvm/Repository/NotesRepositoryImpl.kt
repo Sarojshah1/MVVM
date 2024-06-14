@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.mvvm.Model.Note
 
-//import com.example.app.repository.NotesRepository
 import com.google.firebase.firestore.FirebaseFirestore
 
 class NotesRepositoryImpl : NotesRepository {
