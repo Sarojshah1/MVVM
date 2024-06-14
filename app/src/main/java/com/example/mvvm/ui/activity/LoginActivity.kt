@@ -6,7 +6,6 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import com.example.mvvm.R
 import com.example.mvvm.ViewModel.AuthViewModel
 import com.example.mvvm.databinding.ActivityLoginBinding
 
