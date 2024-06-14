@@ -7,7 +7,6 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import com.example.mvvm.R
 import com.example.mvvm.ViewModel.AuthViewModel
 import com.example.mvvm.databinding.ActivityCreateAccountBinding
 
@@ -38,13 +37,11 @@ class CreateAccountActivity : AppCompatActivity() {
 
         authViewModel.authResult.observe(this, { result ->
             result.onSuccess { message ->
-//                 Handle success, maybe navigate to another screen
                 Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
                 navigateToLogin()
             }
             result.onFailure { exception ->
-                // Handle error
-                showError(exception.message ?: "Unknown error occurred")
+             showError(exception.message ?: "Unknown error occurred")
                 changeInProgress(false)
             }
         })
