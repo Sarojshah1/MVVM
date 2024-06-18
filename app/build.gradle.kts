@@ -45,14 +45,17 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
+    implementation(libs.firebase.database)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.firebase.database)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    implementation ("androidx.lifecycle:lifecycle-extensions:2.2.0")
-    implementation ("com.google.firebase:firebase-auth:21.0.6")
-    implementation ("com.google.firebase:firebase-firestore:24.0.1")
-    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1")
+    implementation("com.google.firebase:firebase-bom:31.0.0")
+
+    implementation("com.google.firebase:firebase-auth:21.0.6")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1")
+    implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
+
 }

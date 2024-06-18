@@ -4,53 +4,64 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.mvvm.Model.Note
 
-import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.database.*
 
 class NotesRepositoryImpl : NotesRepository {
 
-    private val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
+    private val database: FirebaseDatabase = FirebaseDatabase.getInstance()
+    private val notesReference: DatabaseReference = database.getReference("notes")
 
     private val _notes = MutableLiveData<Result<List<Note>>>()
     override val notes: LiveData<Result<List<Note>>> = _notes
 
     override fun getNotes() {
-        firestore.collection("notes").get().addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                val notesList = task.result?.toObjects(Note::class.java)
-                _notes.value = Result.success(notesList ?: emptyList())
-            } else {
-                _notes.value = Result.failure(task.exception ?: Exception("Unknown error occurred"))
+        notesReference.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val notesList = mutableListOf<Note>()
+                for (noteSnapshot in snapshot.children) {
+                    val note = noteSnapshot.getValue(Note::class.java)
+                    note?.let { notesList.add(it) }
+                }
+                _notes.value = Result.success(notesList)
             }
-        }
+
+            override fun onCancelled(error: DatabaseError) {
+                _notes.value = Result.failure(error.toException())
+            }
+        })
     }
 
     override fun addNote(note: Note) {
-        firestore.collection("notes").add(note).addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                getNotes()
-            } else {
-                _notes.value = Result.failure(task.exception ?: Exception("Unknown error occurred"))
+        val noteId = notesReference.push().key ?: ""
+        notesReference.child(noteId).setValue(note)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    getNotes()
+                } else {
+                    _notes.value = Result.failure(task.exception ?: Exception("Unknown error occurred"))
+                }
             }
-        }
     }
 
     override fun updateNote(note: Note) {
-        firestore.collection("notes").document(note.id).set(note).addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                getNotes()
-            } else {
-                _notes.value = Result.failure(task.exception ?: Exception("Unknown error occurred"))
+        notesReference.child(note.id).setValue(note)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    getNotes()
+                } else {
+                    _notes.value = Result.failure(task.exception ?: Exception("Unknown error occurred"))
+                }
             }
-        }
     }
 
     override fun deleteNote(noteId: String) {
-        firestore.collection("notes").document(noteId).delete().addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                getNotes()
-            } else {
-                _notes.value = Result.failure(task.exception ?: Exception("Unknown error occurred"))
+        notesReference.child(noteId).removeValue()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    getNotes()
+                } else {
+                    _notes.value = Result.failure(task.exception ?: Exception("Unknown error occurred"))
+                }
             }
-        }
     }
 }

@@ -36,7 +36,7 @@ class LoginActivity : AppCompatActivity() {
             val password = binding.passwordEditText.text.toString()
             if (validateData(email, password)) {
                 changeInProgress(true)
-                authViewModel.createAccount(email, password)
+                authViewModel.createAccount(email,password)
             }
         }
 
